@@ -4,7 +4,8 @@
   "description": "키오스크 프로젝트",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "babel src -d dist"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +15,10 @@
     "nodemon": "^3.0.1",
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9"
   }
 }

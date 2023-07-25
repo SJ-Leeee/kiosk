@@ -49,3 +49,65 @@ app.listen(port,()=>{})
 http 객체를 쓰는 이유 -> 더 많은 옵션을 넣을 수 있다. 소켓.. https 같은
 
 # npm i sequelize sequelize-cli nodemon mysql2
+
+패키지 설치
+
+# 시퀄라이즈
+
+npx sequelize init
+config/config.json 파일 설정
+npx sequelize db:create
+
+# babel
+
+바벨은 ES5+ 코드를 자바스크립의 하위 호환 버전으로 변환하여 오래된 브라우저에서 실행하도록 변환하는 컴파일러이다. (트랜스파일링: 특정 언어로 작성된 코드를 다른 언어로 변환)
+
+# 필요한 패키지
+
+npm install --save-dev @babel/core @babel/cli @babel/preset-env
+
+@babel/core
+바벨의 핵심 기능이 있는 모듈 (parsing, traverse, generator를 한꺼번에 처리할 수 있는 함수를 제공 => transformSync)
+@babel/cli
+@babel/core에 대한 인터페이스 역할을 하며 개발 프로세스와 잘 통합되는 도구
+@babel/preset-env
+모던 자바스크립트를 지원하기 위한 모든 플러그인의 집합
+
+# babel.config.json
+
+{
+"presets": [
+[
+"@babel/preset-env",
+{
+"targets": {
+"edge": "17",
+"firefox": "60",
+"chrome": "67",
+"safari": "11.1"
+},
+"useBuiltIns": "usage",
+"corejs": "3.6.5"
+}
+]
+]
+}
+
+#
+
+# 바벨 > package.json
+
+{
+...
+"scripts": {
+"test": "echo \"Error: no test specified\" && exit 1",
+"compile": "babel src -d dist"
+},
+...
+}
+
+# 출처
+
+https://velog.io/@suyeon9456/Babel#%EF%B8%8F-babel%EC%9D%B4-%ED%95%98%EB%8A%94-%EC%9D%BC
+
+- 6번부터 안했다.
