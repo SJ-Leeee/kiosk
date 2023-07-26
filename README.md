@@ -1,7 +1,5 @@
 # 🛵Kiosk Project
 
-![MAIN](./img/키오스크.jpg)
-
 ## 프로젝트 목적
 
 <aside>
