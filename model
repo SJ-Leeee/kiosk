@@ -1,0 +1,1 @@
+npx sequelize model:generate --name Item --attributes name:string,option_id:integer,price:integer,type:enum,amount:integer
