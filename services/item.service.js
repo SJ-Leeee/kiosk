@@ -34,7 +34,21 @@ class ItemService {
       throw new Error(error);
     }
   };
+
+  getItemsByType = async (type) => {
+    // getAllItems 로 둘다 처리할 수 있을 것 같으면 분리하는 것?
+    try {
+      if (!["snack", "drink", "food"].includes(type)) {
+        throw new Error("타입을 snack, drink, food 중 고르세요");
+      }
+      const itemDataByType = await this.itemRepository.getItemsByType(type);
+      return { code: 200, data: itemDataByType };
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 }
+
 // 레포지토리단에서 에러
 // 비동기에러 try catch or 다른 모듈을 써야 한다
 // 결과적으로 서비스에서도 try catch문을 써야합니다

@@ -23,8 +23,22 @@ class ItemController {
         return res.status(result.code).json({ data: result.data });
       }
       return res.status(result.code).json({ message: result.message });
-      console.log(err);
     } catch (err) {
+      console.log(err);
+      return res.status(500).json({ err: err.message });
+    }
+  };
+  getItemsByType = async (req, res) => {
+    try {
+      const { type } = req.params;
+      const result = await this.itemService.getItemsByType(type);
+
+      if (result.data) {
+        return res.status(result.code).json({ data: result.data });
+      }
+      return res.status(result.code).json({ message: result.message });
+    } catch (err) {
+      console.log(err);
       return res.status(500).json({ err: err.message });
     }
   };

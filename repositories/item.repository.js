@@ -12,6 +12,9 @@ class ItemRepository {
   getAllItems = async () => {
     return await Item.findAll({});
   };
+  getItemsByType = async (type) => {
+    return await Item.findAll({ where: { type } });
+  };
 }
 
 module.exports = ItemRepository;
