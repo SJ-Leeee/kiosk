@@ -1,18 +1,17 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-
+const itemRoute = require("./routes/item.route");
 class SimpleServer {
   constructor(port) {
     this.port = port;
   }
 
   start() {
-    app.use("/", (req, res) => {
-      res.send("Hello World!");
-    });
+    app.use(express.json());
+    app.use("/", itemRoute);
     app.listen(this.port, () => {
-      console.log(port, "포트로 서버가 열렸어요!");
+      console.log(this.port, "포트로 서버가 열렸어요!");
     });
   }
 }

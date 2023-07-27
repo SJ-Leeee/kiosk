@@ -10,29 +10,21 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       name: {
-        allowNull: false,
         type: Sequelize.STRING,
-      },
-      option_id: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
+        unique: true,
       },
       price: {
-        allowNull: false,
         type: Sequelize.INTEGER,
+        allowNull: false,
       },
       type: {
+        type: Sequelize.ENUM("Food", "Drink", "Snack"),
         allowNull: false,
-        type: Sequelize.ENUM({
-          DRINK: "drink",
-          SNACK: "snack",
-          FOOD: "food",
-        }),
       },
       amount: {
-        allowNull: false,
         type: Sequelize.INTEGER,
+        allowNull: false,
         defaultValue: 0,
       },
       createdAt: {
