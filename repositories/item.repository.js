@@ -22,6 +22,10 @@ class ItemRepository {
     await Item.destroy({ where: { id: itemId } });
     return;
   };
+  updateItem = async (itemId, name, price) => {
+    await Item.update({ name, price }, { where: { id: itemId } });
+    return;
+  };
 }
 
 module.exports = ItemRepository;

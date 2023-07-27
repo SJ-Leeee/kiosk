@@ -54,7 +54,7 @@ class ItemService {
       if (!itemData) throw new Error("상품이 존재하지 않습니다.");
       const remainAmount = itemData.amount;
       if (remainAmount > 0) {
-        const confirmDelete = confirm("수량이 남아있습니다. 삭제하시겠습니까?");
+        const confirmDelete = confirm("수량이 남아있습니다. 삭제하시겠습니까?"); // await??
         if (confirmDelete) {
           // 질문하자
           await this.itemRepository.deleteItem(itemId);
@@ -64,7 +64,20 @@ class ItemService {
         }
       }
       await this.itemRepository.deleteItem(itemId);
-      return { code: 200, message: "삭제를 완료하였습니다." };
+      return { code: 200, message: "삭제가 완료되었습니다." };
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  updateItem = async (itemId, name, price) => {
+    try {
+      if (!name || !price) throw new Error("이름과 가격을 입력하세요.");
+      if (price < 0) throw new Error("가격을 음수로 설정할 수 없습니다.");
+      const itemData = await this.itemRepository.getItemById(itemId);
+      if (!itemData) throw new Error("상품이 존재하지 않습니다.");
+      await this.itemRepository.updateItem(name, price, itemId);
+      return { code: 200, message: "수정이 완료되었습니다." };
     } catch (error) {
       throw new Error(error);
     }

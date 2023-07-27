@@ -7,5 +7,6 @@ router.post("/item", itemController.registerItem);
 router.get("/items", itemController.getAllItems);
 router.get("/items/:type", itemController.getItemsByType);
 router.delete("/item/:itemId", itemController.deleteItem);
+router.patch("/item/:itemId", itemController.updateItem);
 
 module.exports = router;
