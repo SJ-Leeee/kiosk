@@ -42,5 +42,20 @@ class ItemController {
       return res.status(500).json({ err: err.message });
     }
   };
+
+  deleteItem = async (req, res) => {
+    try {
+      const { itemId } = req.params;
+      const result = await this.itemService.deleteItem(itemId);
+
+      if (result.data) {
+        return res.status(result.code).json({ data: result.data });
+      }
+      return res.status(result.code).json({ message: result.message });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ err: err.message });
+    }
+  };
 }
 module.exports = ItemController;

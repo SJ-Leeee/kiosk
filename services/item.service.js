@@ -47,6 +47,28 @@ class ItemService {
       throw new Error(error);
     }
   };
+
+  deleteItem = async (itemId) => {
+    try {
+      const itemData = await this.itemRepository.getItemById(itemId);
+      if (!itemData) throw new Error("상품이 존재하지 않습니다.");
+      const remainAmount = itemData.amount;
+      if (remainAmount > 0) {
+        const confirmDelete = confirm("수량이 남아있습니다. 삭제하시겠습니까?");
+        if (confirmDelete) {
+          // 질문하자
+          await this.itemRepository.deleteItem(itemId);
+          return { code: 200, message: "삭제를 완료하였습니다." };
+        } else {
+          return { code: 202, message: "삭제를 취소하였습니다." };
+        }
+      }
+      await this.itemRepository.deleteItem(itemId);
+      return { code: 200, message: "삭제를 완료하였습니다." };
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 }
 
 // 레포지토리단에서 에러

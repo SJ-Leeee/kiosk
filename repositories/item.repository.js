@@ -15,6 +15,13 @@ class ItemRepository {
   getItemsByType = async (type) => {
     return await Item.findAll({ where: { type } });
   };
+  getItemById = async (itemId) => {
+    return await Item.findOne({ where: { id: itemId } });
+  };
+  deleteItem = async (itemId) => {
+    await Item.destroy({ where: { id: itemId } });
+    return;
+  };
 }
 
 module.exports = ItemRepository;
