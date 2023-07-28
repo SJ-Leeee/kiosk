@@ -1,4 +1,4 @@
-const { Item } = require('../models');
+const { Item, Option } = require('../models');
 class ItemRepository {
   registerItem = async (name, price, type) => {
     await Item.create({ name, price, type });
@@ -10,10 +10,21 @@ class ItemRepository {
   };
 
   getAllItems = async () => {
-    return await Item.findAll({});
+    return await Item.findAll({
+      include: {
+        model: Option,
+        attributes: { exclude: ['item_id', 'createdAt', 'updatedAt'] },
+      },
+    });
   };
   getItemsByType = async (type) => {
-    return await Item.findAll({ where: { type } });
+    return await Item.findAll({
+      include: {
+        model: Option,
+        attributes: { exclude: ['item_id', 'createdAt', 'updatedAt'] },
+      },
+      where: { type },
+    });
   };
   getItemById = async (itemId) => {
     return await Item.findOne({ where: { id: itemId } });
