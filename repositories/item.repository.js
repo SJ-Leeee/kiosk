@@ -1,4 +1,4 @@
-const { Item } = require("../models");
+const { Item } = require('../models');
 class ItemRepository {
   registerItem = async (name, price, type) => {
     await Item.create({ name, price, type });
@@ -22,8 +22,12 @@ class ItemRepository {
     await Item.destroy({ where: { id: itemId } });
     return;
   };
-  updateItem = async (itemId, name, price) => {
+  updateItem = async (name, price, itemId) => {
     await Item.update({ name, price }, { where: { id: itemId } });
+    return;
+  };
+  updateAmount = async (itemId, amount, t) => {
+    await Item.update({ amount }, { where: { id: itemId }, transaction: t });
     return;
   };
 }
