@@ -4,7 +4,7 @@ class OrderRepository {
     return await Item.findOne({ where: { id: itemId } });
   };
   getOrderByItemId = async (itemId) => {
-    return await Order_item.findOne({ where: { item_id: itemId } });
+    return await Order_item.findAll({ where: { item_id: itemId } });
   };
 
   getOrderById = async (orderId) => {

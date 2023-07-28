@@ -12,9 +12,6 @@ class OrderService {
       if (!amount) throw new Error('발주 수량을 입력하세요');
       const exItem = await this.orderRepository.getItemById(itemId);
       if (!exItem) throw new Error('상품이 존재하지 않습니다.');
-      // const exOrder = await this.orderRepository.getOrderByItemId(itemId);
-      // if (!exOrder) throw new Error('해당 상품에 대한 발주 내역이 없습니다.');
-      // if (exOrder.state === 'ORDERED' || exOrder.state === 'PENDING') throw new Error('이미 발주한 내역이 있습니다.');
 
       const state = 'ORDERED';
       await this.orderRepository.registerOrder(itemId, amount, state);
@@ -85,6 +82,17 @@ class OrderService {
           }
         }
       }
+    } catch (error) {
+      throw error;
+    }
+  };
+  getOrder = async (itemId) => {
+    try {
+      const exItem = await this.itemRepository.getItemById(itemId);
+      if (!exItem) throw new Error('상품이 존재하지 않습니다.');
+
+      const orderData = await this.orderRepository.getOrderByItemId(itemId);
+      return { code: 200, data: orderData };
     } catch (error) {
       throw error;
     }
