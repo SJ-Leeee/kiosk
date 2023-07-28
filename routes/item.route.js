@@ -17,6 +17,7 @@ router.patch('/items/:itemId', itemController.updateItem);
 //
 router.post('/items/:itemId/option', optionController.registerOption);
 router.get('/items/:itemId/option', optionController.getAllOptions);
+router.patch('/items/option/:optionId', optionController.updateOption);
 
 //
 router.post('/order/kiosk/:itemId', orderController.orderItem);
