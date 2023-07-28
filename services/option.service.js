@@ -43,5 +43,17 @@ class OptionSerivce {
       throw error;
     }
   };
+
+  deleteOption = async (optionId) => {
+    try {
+      const exOption = await this.optionRepository.getOptionById(optionId);
+      if (!exOption) throw new Error('존재하지 않는 옵션입니다.');
+
+      await this.optionRepository.deleteOption(optionId);
+      return { code: 200, message: '옵션이 삭제되었습니다.' };
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 module.exports = OptionSerivce;

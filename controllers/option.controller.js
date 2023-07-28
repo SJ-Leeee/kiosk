@@ -40,5 +40,17 @@ class OptionController {
       return res.status(500).json({ err: err.message });
     }
   };
+
+  deleteOption = async (req, res) => {
+    try {
+      const { optionId } = req.params;
+      const result = await this.optionService.deleteOption(optionId);
+      if (result.data) return res.status(result.code).json({ data: result.data });
+      return res.status(result.code).json({ message: result.message });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ err: err.message });
+    }
+  };
 }
 module.exports = OptionController;

@@ -20,5 +20,10 @@ class OptionRepository {
     await Option.update({ option_name: optionName, option_price: optionPrice }, { where: { id: optionId } });
     return;
   };
+
+  deleteOption = async (optionId) => {
+    await Option.destroy({ where: { id: optionId } });
+    return;
+  };
 }
 module.exports = OptionRepository;
