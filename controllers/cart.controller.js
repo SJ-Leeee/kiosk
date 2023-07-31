@@ -32,6 +32,20 @@ class CartController {
       return res.status(500).json({ err: err.message });
     }
   };
+  addOptionToItem = async (req, res) => {
+    try {
+      const cartId = res.locals.cart.id;
+      const { cartDetailId, itemId, optionId } = req.params;
+      const result = await this.cartService.addOptionToItem(cartDetailId, itemId, optionId);
+      if (result.data) {
+        return res.status(result.code).json({ data: result.data });
+      }
+      return res.status(result.code).json({ message: result.message });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ err: err.message });
+    }
+  };
 
   getCart = async (req, res) => {
     try {

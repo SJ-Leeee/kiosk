@@ -32,6 +32,7 @@ router.delete('/items/option/:optionId', optionController.deleteOption);
 // 장바구니
 router.post('/cart', cartController.registerCart);
 router.post('/cart/item/:itemId', cartMiddleware, cartController.addItemToCart);
+router.post('/cart/:cartDetailId/item/:itemId/option/:optionId', cartMiddleware, cartController.addOptionToItem);
 router.get('/cart/item', cartMiddleware, cartController.getCart);
 
 // 발주 CRU

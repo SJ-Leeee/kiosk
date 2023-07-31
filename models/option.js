@@ -1,6 +1,6 @@
-"use strict";
-const { Model } = require("sequelize");
-const Sequelize = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
+const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Option extends Model {
     /**
@@ -9,11 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      this.hasMany(models.Cart_detail_option, {
+        sourceKey: 'id',
+        foreignKey: 'option_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
       this.belongsTo(models.Item, {
-        targetKey: "id",
-        foreignKey: "item_id",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+        targetKey: 'id',
+        foreignKey: 'item_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       });
     }
   }
@@ -39,18 +45,18 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn('now'),
       },
     },
     {
       sequelize,
-      modelName: "Option",
-    }
+      modelName: 'Option',
+    },
   );
   return Option;
 };

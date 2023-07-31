@@ -1,6 +1,6 @@
-"use strict";
-const { Model } = require("sequelize");
-const Sequelize = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
+const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Item extends Model {
     /**
@@ -9,23 +9,29 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      this.hasMany(models.Cart_detail_option, {
+        sourceKey: 'id',
+        foreignKey: 'item_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
       this.hasMany(models.Order_item, {
-        sourceKey: "id",
-        foreignKey: "item_id",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+        sourceKey: 'id',
+        foreignKey: 'item_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       });
       this.hasMany(models.Option, {
-        sourceKey: "id",
-        foreignKey: "item_id",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+        sourceKey: 'id',
+        foreignKey: 'item_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       });
       this.hasMany(models.Cart_detail, {
-        sourceKey: "id",
-        foreignKey: "item_id",
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
+        sourceKey: 'id',
+        foreignKey: 'item_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       });
     }
   }
@@ -47,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       type: {
-        type: Sequelize.ENUM("Food", "Drink", "Snack"),
+        type: Sequelize.ENUM('Food', 'Drink', 'Snack'),
         allowNull: false,
       },
       amount: {
@@ -58,18 +64,18 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("now"),
+        defaultValue: Sequelize.fn('now'),
       },
     },
     {
       sequelize,
-      modelName: "Item",
-    }
+      modelName: 'Item',
+    },
   );
   return Item;
 };
