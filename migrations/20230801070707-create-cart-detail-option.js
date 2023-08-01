@@ -1,5 +1,5 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+/\*_ @type {import('sequelize-cli').Migration} _/;
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Cart_detail_options', {
@@ -15,6 +15,8 @@ module.exports = {
         references: {
           model: 'Items',
           key: 'id',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         },
       },
       cart_detail_id: {
@@ -23,6 +25,8 @@ module.exports = {
         references: {
           model: 'Cart_details',
           key: 'id',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         },
       },
       option_id: {
@@ -31,6 +35,8 @@ module.exports = {
         references: {
           model: 'Options',
           key: 'id',
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         },
       },
       createdAt: {

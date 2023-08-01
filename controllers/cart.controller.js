@@ -32,6 +32,21 @@ class CartController {
       return res.status(500).json({ err: err.message });
     }
   };
+
+  deleteItemFromCart = async (req, res) => {
+    try {
+      const { cartDetailId } = req.params;
+      const result = await this.cartService.deleteItemFromCart(cartDetailId);
+      if (result.data) {
+        return res.status(result.code).json({ data: result.data });
+      }
+      return res.status(result.code).json({ message: result.message });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ err: err.message });
+    }
+  };
+
   addOptionToItem = async (req, res) => {
     try {
       const cartId = res.locals.cart.id;

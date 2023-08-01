@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const { Cart_detail, Cart, Item, Option, Cart_detail_option } = require('../models');
 class CartRepository {
   registerCart = async () => {
@@ -12,8 +11,15 @@ class CartRepository {
     return await Cart_detail_option.create({ cart_detail_id: cartDetailId, item_id: itemId, option_id: optionId });
   };
 
-  getCartDetail = async (cartId, itemId) => {
+  getCartDetailByCartId = async (cartId, itemId) => {
     return await Cart_detail.findOne({ where: { cart_id: cartId, item_id: itemId } });
+  };
+  getCartDetailById = async (cartDetailId) => {
+    return await Cart_detail.findOne({ where: { id: cartDetailId } });
+  };
+
+  deleteItemFromCart = async (cartDetailId) => {
+    return await Cart_detail.destroy({ where: { id: cartDetailId } });
   };
 
   getCart = async (cartId) => {
@@ -22,7 +28,7 @@ class CartRepository {
       include: [
         {
           model: Cart_detail,
-          attributes: ['amount'],
+          attributes: ['id', 'amount'],
           include: [
             {
               model: Item,

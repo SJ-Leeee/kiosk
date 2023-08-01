@@ -32,6 +32,8 @@ router.delete('/items/option/:optionId', optionController.deleteOption);
 // 장바구니
 router.post('/cart', cartController.registerCart);
 router.post('/cart/item/:itemId', cartMiddleware, cartController.addItemToCart);
+router.delete('/cart/item/:cartDetailId', cartMiddleware, cartController.deleteItemFromCart);
+// 아이템삭제, 옵션삭제
 router.post('/cart/item/:itemId/option/:optionId', cartMiddleware, cartController.addOptionToItem);
 router.get('/cart/item', cartMiddleware, cartController.getCart);
 
