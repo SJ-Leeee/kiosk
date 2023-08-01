@@ -1,11 +1,12 @@
+const { where } = require('sequelize');
 const { Cart_detail, Cart, Item, Option, Cart_detail_option } = require('../models');
 class CartRepository {
   registerCart = async () => {
     return await Cart.create({});
   };
 
-  addItemToCart = async (cartId, itemId, amount) => {
-    return await Cart_detail.create({ cart_id: cartId, item_id: itemId, amount });
+  addItemToCart = async (cartId, itemId, amount, t) => {
+    return await Cart_detail.create({ cart_id: cartId, item_id: itemId, amount }, { transaction: t });
   };
   addOptionToItem = async (cartDetailId, itemId, optionId) => {
     return await Cart_detail_option.create({ cart_detail_id: cartDetailId, item_id: itemId, option_id: optionId });
@@ -17,7 +18,7 @@ class CartRepository {
 
   getCart = async (cartId) => {
     return await Cart.findOne({
-      attributes: ['state'],
+      attributes: ['id', 'state'],
       include: [
         {
           model: Cart_detail,
@@ -29,32 +30,6 @@ class CartRepository {
             },
             {
               model: Cart_detail_option,
-              include: {
-                model: Option,
-                attributes: ['option_name', 'option_price'],
-              },
-            },
-          ],
-        },
-      ],
-      where: { id: cartId },
-    });
-  };
-  getCart = async (cartId) => {
-    return await Cart.findOne({
-      attributes: ['state'],
-      include: [
-        {
-          model: Cart_detail,
-          attributes: ['id', 'amount'],
-          include: [
-            {
-              model: Item,
-              attributes: ['name', 'price'],
-            },
-            {
-              model: Cart_detail_option,
-              attributes: ['option_id'],
               include: {
                 model: Option,
                 attributes: ['option_name', 'option_price'],

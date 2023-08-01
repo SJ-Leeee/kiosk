@@ -1,8 +1,9 @@
 const CartRepository = require('../repositories/cart.repository');
 const ItemRepository = require('../repositories/item.repository');
 const OptionRepository = require('../repositories/option.repository');
+const { sequelize } = require('../models');
+const { Transaction } = require('sequelize');
 
-const jwt = require('jsonwebtoken');
 class CartService {
   cartRepository = new CartRepository();
   itemRepository = new ItemRepository();
@@ -21,13 +22,20 @@ class CartService {
   addItemToCart = async (cartId, itemId, amount) => {
     try {
       if (!amount) throw new Error('수량을 입력하세요.');
-
       const exItem = await this.itemRepository.getItemById(itemId);
       if (!exItem) throw new Error('아이템이 존재하지 않습니다.');
       if (exItem.amount < amount) throw new Error('수량이 부족합니다.');
-
-      await this.cartRepository.addItemToCart(cartId, itemId, amount);
-
+      const t = await sequelize.transaction({
+        isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
+      });
+      try {
+        await this.cartRepository.addItemToCart(cartId, itemId, amount, t);
+        await this.itemRepository.updateAmount(itemId, amount, t);
+        await t.commit();
+      } catch (transactionError) {
+        await t.rollback();
+        throw transactionError;
+      }
       return { code: 200, message: `제품 추가가 완료되었습니다.` };
     } catch (error) {
       throw error;
@@ -43,7 +51,7 @@ class CartService {
       if (!exCartDetail) throw new Error('장바구니에 해당상품이 존재하지 않습니다.');
       if (exOption.item_id !== exCartDetail.item_id) throw new Error('해당 상품의 옵션이 아닙니다.');
 
-      await this.cartRepository.addOptionToItem(cartDetailId, itemId, optionId);
+      await this.cartRepository.addOptionToItem(exCartDetail.id, itemId, optionId);
 
       return { code: 200, message: `옵션 추가가 완료되었습니다.` };
     } catch (error) {
