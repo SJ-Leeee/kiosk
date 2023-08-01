@@ -24,6 +24,7 @@ class CartService {
 
       const exItem = await this.itemRepository.getItemById(itemId);
       if (!exItem) throw new Error('아이템이 존재하지 않습니다.');
+      if (exItem.amount < amount) throw new Error('수량이 부족합니다.');
 
       await this.cartRepository.addItemToCart(cartId, itemId, amount);
 
@@ -32,13 +33,13 @@ class CartService {
       throw error;
     }
   };
-  addOptionToItem = async (cartDetailId, itemId, optionId) => {
+  addOptionToItem = async (cartId, itemId, optionId) => {
     try {
       const exItem = await this.itemRepository.getItemById(itemId);
       if (!exItem) throw new Error('아이템이 존재하지 않습니다.');
       const exOption = await this.optionRepository.getOptionById(optionId);
       if (!exOption) throw new Error('옵션이 존재하지 않습니다.');
-      const exCartDetail = await this.cartRepository.getCartDetail(cartDetailId);
+      const exCartDetail = await this.cartRepository.getCartDetail(cartId, itemId);
       if (!exCartDetail) throw new Error('장바구니에 해당상품이 존재하지 않습니다.');
       if (exOption.item_id !== exCartDetail.item_id) throw new Error('해당 상품의 옵션이 아닙니다.');
 

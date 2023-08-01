@@ -11,8 +11,8 @@ class CartRepository {
     return await Cart_detail_option.create({ cart_detail_id: cartDetailId, item_id: itemId, option_id: optionId });
   };
 
-  getCartDetail = async (cartDetailId) => {
-    return await Cart_detail.findOne({ where: { id: cartDetailId } });
+  getCartDetail = async (cartId, itemId) => {
+    return await Cart_detail.findOne({ where: { cart_id: cartId, item_id: itemId } });
   };
 
   getCart = async (cartId) => {
