@@ -94,5 +94,15 @@ class CartService {
       throw error;
     }
   };
+
+  orderCart = async (cartId) => {
+    try {
+      await this.cartRepository.orderCart(cartId);
+
+      return { code: 200, message: `주문이 완료되었습니다. 대기 번호는 ${cartId} 번 입니다.` };
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 module.exports = CartService;

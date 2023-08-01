@@ -47,5 +47,8 @@ class CartRepository {
       where: { id: cartId },
     });
   };
+  orderCart = async (cartId) => {
+    return await Cart.update({ state: 1 }, { where: { id: cartId } });
+  };
 }
 module.exports = CartRepository;
