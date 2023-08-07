@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "admin",
-    "password": "ehwjrqjqtk1!",
-    "database": "KIOSK",
-    "host": "express-database.ctcyyju0ub4c.ap-northeast-2.rds.amazonaws.com",
+    "username": "",
+    "password": "!",
+    "database": "",
+    "host": "m",
     "dialect": "mysql"
   },
   "test": {
